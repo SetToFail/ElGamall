@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+</head>
+<body>
+введите число которое надо зашифровать<br>
+Сообщение M должно быть меньше числа p. <br>	
+<input type="text" class="M" name=""><br>
+Генерируется случайное простое число p.<br>
+<input type="text" class="text1" name=""><br>
+Выбирается случайное целое число x такое, что (1 меньше x, меньше p-1):<br>
+<input type="text" class="text2" name=""><br>
+Выбирается случайное взаимо простое с р-1 число K такое, что (1 меньше k, меньше p-1):<br>
+<input type="text" class="K" name=""><br>
+<input type="button" name="" value="ok" onclick="shifr()"><br>
+расшифровка :
+<input type="text" class="res" name="color"><br>
+<script type="text/javascript">
+	function shifr() {
+		var p = document.querySelector(".text1").value;
+		var eiler = 1;
+		var x = document.querySelector(".text2").value;
+		var M = document.querySelector(".M").value;
+		var K = document.querySelector(".K").value;
+
+		for (var i = 2; i < p; i++ ){
+			var flag = true	;
+			for(var j = 2; j < p; j++){
+				
+				if (p % j == 0 && i % j == 0){
+					//eiler++;
+					flag = false;
+					break;
+					
+					
+				}
+			}
+			if(flag){
+				eiler++;
+			}
+		}
+		var G = 0;
+		for(var i = 2; i<=p-1;i++){
+			if ((i**eiler)%p==1){
+				G = i;
+				break;
+			}
+		}
+		var Y = (G**x)-p*	Math.floor((G**x)/p);
+		console.log("открытый ключ:");
+		console.log(Y);
+		console.log(G);
+		console.log(p);
+		console.log("Закрытый ключ:");
+		console.log(x);
+		console.log("Шифротекст:");
+		var a = (G**K)-p*	Math.floor((G**K)/p);
+		var b = ((Y**K)*M)-p*	Math.floor(((Y**K)*M)/p);
+		console.log(a);
+		console.log(b);
+		var ras = (b*a**(p-1-x))-p*	Math.floor((b*a**(p-1-x))/p);
+		document.querySelector(".res").value = ras;
+	}
+	
+</script>
+</body>
+</html>
